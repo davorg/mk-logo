@@ -1,0 +1,28 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use feature 'say';
+
+use SVG;
+
+my $word = ucfirst lc (shift || 'Hacks');
+
+my $s = SVG->new;
+
+my $style = {
+  'font-family' => q['Utopia'],
+  'font-size'   => '400%',
+  'font-weight' => 'bold',
+};
+
+my $text = $s->text(x => 50, y => 50, style => $style);
+
+for ("{","Perl", $word, "}") {
+  my $tstyle = {
+  };
+  $tstyle->{fill} = '#008080' if $_ eq 'Perl';
+  $text->tspan(style => $tstyle)->cdata($_);
+}
+
+say $s->xmlify;
